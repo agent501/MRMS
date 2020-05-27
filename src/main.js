@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import { store } from './store';
 import alert from './components/Shared/Alert.vue';
 import vuetify from './plugins/vuetify';
 import { fb } from './components/firebase/firebase.js';

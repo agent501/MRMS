@@ -80,7 +80,8 @@ export default {
     userIsAuthenticated() {
       return (
         this.$store.getters.user !== null &&
-        this.$store.getters.user !== undefined
+        this.$store.getters.user !== undefined &&
+        this.$store.getters.user.id == 'arS9cosLYVdWHbFVyyNIVIaZ3T13'
       );
     }
   },
