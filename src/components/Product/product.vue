@@ -17,27 +17,6 @@
               <v-spacer></v-spacer>
 
               <app-edit-product :product="product"></app-edit-product>
-              <v-btn text @click.stop="dialog = true" class="red white--text" raised>
-                <v-icon>delete_forever</v-icon>Delete
-              </v-btn>
-              <v-dialog v-model="dialog" max-width="290">
-                <v-card>
-                  <v-card-title class="headline">Are you sure you want to delete it?</v-card-title>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-
-                    <v-btn
-                      color="green darken-1"
-                      raised
-                      @click="deleteProduct(product.id)"
-                      type="submit"
-                    >Yes</v-btn>
-
-                    <v-btn color="red darken-1" raised @click="dialog = false">No</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
             </template>
           </v-card-title>
 
@@ -127,39 +106,14 @@
 </template>
 
 <script>
-// import { fb } from '../firebase/firebase.js';
 export default {
   props: ['id'],
 
   data() {
     return {
       reactive: 'true',
-      name: '',
-      dialog: false
+      name: ''
     };
-  },
-  methods: {
-    deleteProduct(id) {
-      this.dialog = false;
-      // console.log(id);
-
-      this.$store.dispatch('deleteProduct', id);
-      //  fb.database()
-      // .ref('products')
-      // .child(id)
-      // .remove()
-      // .then(function() {
-      //   // File deleted successfully
-      //   // commit('deleteProduct', payload);
-      //   console.log('success');
-      // })
-      // .catch(function(error) {
-      //   // Uh-oh, an error occur
-      //   console.log(error);
-      // });
-
-      this.$router.push('/products');
-    }
   },
   computed: {
     product() {

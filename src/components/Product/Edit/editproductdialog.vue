@@ -2,8 +2,8 @@
   <v-row justify="center">
     <v-dialog v-model="editDialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn color="success" dark v-on="on">
-          <v-icon>edit</v-icon>Edit
+        <v-btn fab color="success" dark v-on="on">
+          <v-icon>edit</v-icon>
         </v-btn>
       </template>
       <v-card>
