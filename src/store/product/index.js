@@ -36,6 +36,14 @@ export default {
         product.productprogressbar = payload.productprogressbar;
       }
     },
+    deleteProduct(state, payload) {
+      const registeredProducts = state.loadedProducts;
+      registeredProducts.splice(
+        registeredProducts.findIndex((product) => product.id === payload),
+        1
+      );
+      // Reflect.deleteProperty(state.user.fbKeys,payload)
+    },
   },
   actions: {
     loadProducts({ commit }) {
@@ -89,6 +97,25 @@ export default {
           commit('createProduct', { ...product, id: key });
           // return key
         });
+    },
+    deleteProduct({ commit }, payload) {
+      const productId = payload;
+      console.log(productId);
+      firebase
+        .database()
+        .ref('products')
+        .child(productId)
+        .remove()
+        .then(function() {
+          // File deleted successfully
+
+          console.log('success');
+        })
+        .catch(function(error) {
+          // Uh-oh, an error occurred!
+          console.log(error);
+        });
+      commit('deleteProduct', payload);
     },
     updateproductdata({ commit }, payload) {
       commit('loading', true);

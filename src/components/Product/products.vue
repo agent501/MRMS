@@ -15,21 +15,9 @@
           <v-card-title>{{ product.name }}</v-card-title>
 
           <v-card-actions>
-            <v-btn text :to="'/products/' + product.id" class="white black--text" raised>Learn More</v-btn>
-
-            <!-- <v-spacer></v-spacer>
-
-            <v-btn icon @click="show = !show">
-              <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-            </v-btn>-->
+            <v-btn :to="'/products/' + product.id" class="white black--text" raised>Learn More</v-btn>
+            <v-spacer></v-spacer>
           </v-card-actions>
-          <!-- <v-expand-transition>
-            <div v-show="show">
-              <v-divider></v-divider>
-
-              <v-card-text>My ID: {{i}}</v-card-text>
-            </div>
-          </v-expand-transition>-->
         </v-card>
       </v-col>
     </v-layout>
@@ -45,16 +33,18 @@ export default {
       investmentperunit: '',
       earningperunit: '',
       productimage: [],
+      dialog: false,
       imageurl: []
     };
   },
+  methods: {},
   computed: {
     products() {
       return this.$store.getters.loadedProducts;
     }
   },
   created() {
-    console.log(this.products);
+    // console.log(this.products);
   }
 };
 </script>
