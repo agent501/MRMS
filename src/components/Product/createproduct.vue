@@ -65,7 +65,6 @@
             </v-flex>
             <v-flex xs12 sm6 offset-sm3 v-for="(image,i) in productimage" :key="i">
               <img :src="image" height="150" />
-              {{productimage}}
             </v-flex>
             <v-flex xs12 sm6 offset-sm3>
               <v-btn class="mr-4" @click="submit" type="submit">submit</v-btn>
