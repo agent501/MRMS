@@ -15,7 +15,7 @@
           <v-card-title>{{ product.name }}</v-card-title>
 
           <v-card-actions>
-            <v-btn text :to="'/products/' + product.id">Learn More</v-btn>
+            <v-btn text :to="'/products/' + product.id" class="white black--text" raised>Learn More</v-btn>
 
             <!-- <v-spacer></v-spacer>
 

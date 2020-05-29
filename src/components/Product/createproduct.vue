@@ -51,7 +51,11 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 offset-sm3>
-              <input type="file" @change="uploadImage" class="form-control" />
+              <v-btn rounded color="red" class="ma-2 white--text" @click="onPickFile">
+                Upload Image
+                <v-icon right dark>mdi-cloud-upload</v-icon>
+              </v-btn>
+              <input type="file" style="display:none" ref="fileInput" @change="uploadImage" />
               <!-- <v-file-input
                 small-chips
                 prepend-icon="insert_photo"
@@ -67,8 +71,8 @@
               <img :src="image" height="150" />
             </v-flex>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn class="mr-4" @click="submit" type="submit">submit</v-btn>
-              <v-btn @click="clear">clear</v-btn>
+              <v-btn class="mr-4" color="primary" @click="submit" type="submit">submit</v-btn>
+              <v-btn color="blue-grey" @click="clear">clear</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -186,6 +190,9 @@ export default {
       this.$store.dispatch('createProduct', productData);
       console.log(productData);
       this.$router.push('/products');
+    },
+    onPickFile() {
+      this.$refs.fileInput.click();
     },
     uploadImage(e) {
       var self = this;
