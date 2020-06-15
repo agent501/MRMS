@@ -1,7 +1,7 @@
 export default {
   state: {
     loading: false,
-    authError: null,
+    error: null,
   },
   mutations: {
     setLoading(state, payload) {
@@ -9,11 +9,11 @@ export default {
     },
     // change the of status error in state
     setError(state, payload) {
-      state.authError = payload;
+      state.error = payload;
     },
     // change the status of error back to null
     clearError(state) {
-      state.authError = null;
+      state.error = null;
     },
   },
   actions: {

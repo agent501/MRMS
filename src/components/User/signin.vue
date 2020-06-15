@@ -8,7 +8,7 @@
     <v-layout row v-if="error">
       <v-flex xs12 sm6 offset-sm3>
         <!-- This is a component that is set globally in main.js -->
-        <app-alert @dismissed="onDismissedd" :text="error.message"></app-alert>
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
       </v-flex>
     </v-layout>
     <v-layout row>
@@ -27,6 +27,7 @@
                       v-model="email"
                       type="email"
                       required
+                      outlined
                       :rules="[
                         () => email.length > 0 || 'Please insert your email',
                       ]"
@@ -43,6 +44,7 @@
                       v-model="password"
                       type="password"
                       required
+                      outlined
                       :rules="[
                         () =>
                           password.length > 0 || 'Please insert your password',
@@ -98,6 +100,7 @@ export default {
     onDismissed() {
       // perform the clearError action that is set inside store.js
       this.$store.dispatch('clearError');
+      console.log('error');
     }
   },
   computed: {

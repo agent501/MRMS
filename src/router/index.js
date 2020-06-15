@@ -25,7 +25,7 @@ export default new VueRouter({
     { path: '/signin', name: 'signin', component: signin },
     { path: '/signup', name: 'signup', component: signup },
     {
-      path: '/profile',
+      path: '/profile/:id',
       name: 'profile',
       component: profile,
       beforeEnter: AuthGuard,
