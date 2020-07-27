@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 export default {
   state: {
     user: null,
-    profile: [],
+    profile: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -13,8 +13,6 @@ export default {
       state.profile = payload;
     },
     updateProfile(state, payload) {
-      const profile = state.profile;
-
       if (payload.name) {
         profile.name = payload.name;
       }
@@ -143,34 +141,6 @@ export default {
     logout({ commit }) {
       firebase.auth().signOut();
       commit('setUser', null);
-    },
-    updatePassword(payload) {
-      var user = firebase.auth().currentUser;
-      var updatepassword = payload.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
-        payload.email,
-        payload.currentpassword
-      );
-
-      user
-        .reauthenticate(credential)
-        .then(() => {
-          user
-            .updatePassword(updatepassword)
-            .then(() => {
-              this.dialog = true;
-              console.log('update complete');
-              if (this.dialog === false) {
-                this.$router.push('/');
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     updateProfileData({ commit }, payload) {
       commit('loading', true);

@@ -84,12 +84,12 @@ export default {
         .ref('products')
         .child(productId)
         .remove()
-        .then(function () {
+        .then(function() {
           // File deleted successfully
 
           console.log('success');
         })
-        .catch(function (error) {
+        .catch(function(error) {
           // Uh-oh, an error occurred!
           console.log(error);
         });
@@ -124,7 +124,7 @@ export default {
         updateObj.name = payload.name;
       }
       if (payload.desscription) {
-        updateObj.description = payload.desscription;
+        updateObj.name = payload.desscription;
       }
       if (payload.earningperunit) {
         updateObj.earningperunit = payload.earningperunit;

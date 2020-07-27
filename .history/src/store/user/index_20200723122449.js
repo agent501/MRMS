@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 export default {
   state: {
     user: null,
-    profile: [],
+    profile: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -11,25 +11,6 @@ export default {
     },
     setLoadedProfile(state, payload) {
       state.profile = payload;
-    },
-    updateProfile(state, payload) {
-      const profile = state.profile;
-
-      if (payload.name) {
-        profile.name = payload.name;
-      }
-      if (payload.email) {
-        profile.email = payload.email;
-      }
-      if (payload.icnumber) {
-        profile.icnumber = payload.icnumber;
-      }
-      if (payload.phonenumber) {
-        profile.phonenumber = payload.phonenumber;
-      }
-      if (payload.ssmimage) {
-        profile.ssmimage = payload.ssmimage;
-      }
     },
   },
   actions: {
@@ -144,34 +125,6 @@ export default {
       firebase.auth().signOut();
       commit('setUser', null);
     },
-    updatePassword(payload) {
-      var user = firebase.auth().currentUser;
-      var updatepassword = payload.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
-        payload.email,
-        payload.currentpassword
-      );
-
-      user
-        .reauthenticate(credential)
-        .then(() => {
-          user
-            .updatePassword(updatepassword)
-            .then(() => {
-              this.dialog = true;
-              console.log('update complete');
-              if (this.dialog === false) {
-                this.$router.push('/');
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     updateProfileData({ commit }, payload) {
       commit('loading', true);
       const updateObj = {};
@@ -192,12 +145,12 @@ export default {
       }
       firebase
         .database()
-        .ref('profiles')
+        .ref('products')
         .child(payload.id)
         .update(updateObj)
         .then(() => {
           commit('setLoading', false);
-          commit('updateProfile', payload);
+          commit('updateProduct', payload);
         })
         .catch((error) => {
           console.log(error);

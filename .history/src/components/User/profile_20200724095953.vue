@@ -178,7 +178,6 @@
 
 <script>
 import { fb } from '../firebase/firebase.js';
-import * as firebase from 'firebase';
 
 export default {
   props: ['id'],
@@ -205,11 +204,10 @@ export default {
     updatePassword() {
       var user = fb.auth().currentUser;
       var updatepassword = this.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
+      const credential = fb.auth.EmailAuthProvider.getCredential(
         this.email,
         this.currentpassword
       );
-
       user
         .reauthenticateWithCredential(credential)
         .then(() => {

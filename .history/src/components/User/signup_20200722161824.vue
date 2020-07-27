@@ -218,7 +218,7 @@ export default {
       storageRef.put(file).then(function() {
         storageRef.getDownloadURL().then(function(downloadURL) {
           console.log('File available at', downloadURL);
-          self.imageurl = downloadURL;
+
           self.image = downloadURL;
         });
       });

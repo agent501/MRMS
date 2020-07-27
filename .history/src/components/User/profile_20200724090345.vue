@@ -82,31 +82,7 @@
                   <v-form>
                     <v-container class="py-0">
                       <v-row>
-                        <v-col cols="12" md="12">
-                          <v-text-field
-                            label="Email"
-                            v-model="profile.email"
-                            class="purple-input"
-                            outlined
-                            disabled
-                          />
-                        </v-col>
-                        <v-col cols="12">
-                          <v-text-field
-                            label="Current Password"
-                            v-model="currentpassword"
-                            class="purple-input"
-                            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :rules="[rules.required, rules.min]"
-                            :type="show3 ? 'text' : 'password'"
-                            hint="At least 8 characters"
-                            counter
-                            @click:append="show3 = !show3"
-                            outlined
-                          />
-                        </v-col>
-
-                        <v-col cols="12">
+                        <v-col cols="12" md="6">
                           <v-text-field
                             label="New Password"
                             v-model="newpassword"
@@ -121,7 +97,7 @@
                           />
                         </v-col>
 
-                        <v-col cols="12">
+                        <v-col cols="12" md="6">
                           <v-text-field
                             label="Confirm Password"
                             v-model="confirmpassword"
@@ -178,7 +154,6 @@
 
 <script>
 import { fb } from '../firebase/firebase.js';
-import * as firebase from 'firebase';
 
 export default {
   props: ['id'],
@@ -191,10 +166,8 @@ export default {
       email: '',
       newpassword: '',
       confirmpassword: '',
-      currentpassword: '',
       show1: false,
       show2: false,
-      show3: false,
       rules: {
         required: value => !!value || 'Required.',
         min: newpassword => newpassword.length >= 8 || 'Min 8 characters'
@@ -205,14 +178,10 @@ export default {
     updatePassword() {
       var user = fb.auth().currentUser;
       var updatepassword = this.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
-        this.email,
-        this.currentpassword
-      );
-
+      var credential;
       user
         .reauthenticateWithCredential(credential)
-        .then(() => {
+        .then(function() {
           user
             .updatePassword(updatepassword)
             .then(() => {
@@ -247,9 +216,9 @@ export default {
   },
   computed: {
     comparePassword() {
-      return this.newpassword !== this.confirmpassword
+      return this.password !== this.confirmPassword
         ? 'Password do not match'
-        : null;
+        : '';
     },
     userdetails() {
       return this.$store.getters.user;

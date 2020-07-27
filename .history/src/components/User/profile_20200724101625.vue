@@ -211,7 +211,7 @@ export default {
       );
 
       user
-        .reauthenticateWithCredential(credential)
+        .reauthenticate(credential)
         .then(() => {
           user
             .updatePassword(updatepassword)

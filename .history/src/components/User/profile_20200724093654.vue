@@ -88,7 +88,6 @@
                             v-model="profile.email"
                             class="purple-input"
                             outlined
-                            disabled
                           />
                         </v-col>
                         <v-col cols="12">
@@ -178,7 +177,6 @@
 
 <script>
 import { fb } from '../firebase/firebase.js';
-import * as firebase from 'firebase';
 
 export default {
   props: ['id'],
@@ -205,11 +203,10 @@ export default {
     updatePassword() {
       var user = fb.auth().currentUser;
       var updatepassword = this.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
-        this.email,
+      var credential = fb.auth.EmailAuthProvider.credential(
+        user.email,
         this.currentpassword
       );
-
       user
         .reauthenticateWithCredential(credential)
         .then(() => {
@@ -247,9 +244,9 @@ export default {
   },
   computed: {
     comparePassword() {
-      return this.newpassword !== this.confirmpassword
+      return this.newpassword !== this.confirmPassword
         ? 'Password do not match'
-        : null;
+        : '';
     },
     userdetails() {
       return this.$store.getters.user;

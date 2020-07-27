@@ -199,27 +199,27 @@ export default {
       this.$refs.fileInput.click();
     },
     uploadImage(e) {
-      var self = this;
-      let file = e.target.files[0];
+      // var self = this;
+      let file = e.target.files;
 
-      // if (file[0].name.lastIndexOf('.') <= 0) {
-      //   return alert('Please add a valid file!');
-      // }
+      if (file[0].name.lastIndexOf('.') <= 0) {
+        return alert('Please add a valid file!');
+      }
 
-      // const fileReader = new FileReader();
-      // fileReader.addEventListener('load', () => {
-      //   this.imageurl = fileReader.result;
-      // });
-      // fileReader.readAsDataURL(file[0]);
+      const fileReader = new FileReader();
+      fileReader.addEventListener('load', () => {
+        this.imageurl = fileReader.result;
+      });
+      fileReader.readAsDataURL(file[0]);
       this.image = file[0];
       // console.log(this.image);
-      var storageRef = fb.storage().ref('profiles/' + file.name);
+      var storageRef = fb.storage().ref('profiles/' + this.user.id + file.name);
 
       storageRef.put(file).then(function() {
         storageRef.getDownloadURL().then(function(downloadURL) {
           console.log('File available at', downloadURL);
-          self.imageurl = downloadURL;
-          self.image = downloadURL;
+
+          self.productimage.push(downloadURL);
         });
       });
     }

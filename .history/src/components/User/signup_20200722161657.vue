@@ -199,7 +199,7 @@ export default {
       this.$refs.fileInput.click();
     },
     uploadImage(e) {
-      var self = this;
+      // var self = this;
       let file = e.target.files[0];
 
       // if (file[0].name.lastIndexOf('.') <= 0) {
@@ -218,8 +218,8 @@ export default {
       storageRef.put(file).then(function() {
         storageRef.getDownloadURL().then(function(downloadURL) {
           console.log('File available at', downloadURL);
-          self.imageurl = downloadURL;
-          self.image = downloadURL;
+
+          self.productimage.push(downloadURL);
         });
       });
     }

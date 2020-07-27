@@ -178,7 +178,6 @@
 
 <script>
 import { fb } from '../firebase/firebase.js';
-import * as firebase from 'firebase';
 
 export default {
   props: ['id'],
@@ -203,32 +202,12 @@ export default {
   },
   methods: {
     updatePassword() {
-      var user = fb.auth().currentUser;
-      var updatepassword = this.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
+      this.$store.dispatch(
+        'updatePassword',
         this.email,
-        this.currentpassword
+        this.currentpassword,
+        this.newpassword
       );
-
-      user
-        .reauthenticateWithCredential(credential)
-        .then(() => {
-          user
-            .updatePassword(updatepassword)
-            .then(() => {
-              this.dialog = true;
-              console.log('update complete');
-              if (this.dialog === false) {
-                this.$router.push('/');
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        })
-        .catch(error => {
-          console.log(error);
-        });
     },
     updateProfile() {
       // console.log(id);

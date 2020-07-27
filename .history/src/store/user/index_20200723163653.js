@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 export default {
   state: {
     user: null,
-    profile: [],
+    profile: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -13,23 +13,21 @@ export default {
       state.profile = payload;
     },
     updateProfile(state, payload) {
-      const profile = state.profile;
-
-      if (payload.name) {
-        profile.name = payload.name;
-      }
-      if (payload.email) {
-        profile.email = payload.email;
-      }
-      if (payload.icnumber) {
-        profile.icnumber = payload.icnumber;
-      }
-      if (payload.phonenumber) {
-        profile.phonenumber = payload.phonenumber;
-      }
-      if (payload.ssmimage) {
-        profile.ssmimage = payload.ssmimage;
-      }
+      profile.name = profile.name != payload.name ? payload.name : profile.name;
+      profile.icnumber =
+        profile.icnumber != payload.icnumber
+          ? payload.icnumber
+          : profile.icnumber;
+      profile.phonenumber =
+        profile.phonenumber != payload.phonenumber
+          ? payload.phonenumber
+          : profile.phonenumber;
+      profile.ssmimage =
+        profile.ssmimage != payload.ssmimage
+          ? payload.ssmimage
+          : profile.ssmimage;
+      profile.email =
+        profile.email != payload.email ? payload.email : profile.email;
     },
   },
   actions: {
@@ -143,34 +141,6 @@ export default {
     logout({ commit }) {
       firebase.auth().signOut();
       commit('setUser', null);
-    },
-    updatePassword(payload) {
-      var user = firebase.auth().currentUser;
-      var updatepassword = payload.newpassword;
-      var credential = firebase.auth.EmailAuthProvider.credential(
-        payload.email,
-        payload.currentpassword
-      );
-
-      user
-        .reauthenticate(credential)
-        .then(() => {
-          user
-            .updatePassword(updatepassword)
-            .then(() => {
-              this.dialog = true;
-              console.log('update complete');
-              if (this.dialog === false) {
-                this.$router.push('/');
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     updateProfileData({ commit }, payload) {
       commit('loading', true);

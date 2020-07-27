@@ -199,8 +199,8 @@ export default {
       this.$refs.fileInput.click();
     },
     uploadImage(e) {
-      var self = this;
-      let file = e.target.files[0];
+      // var self = this;
+      // let file = e.target.files;
 
       // if (file[0].name.lastIndexOf('.') <= 0) {
       //   return alert('Please add a valid file!');
@@ -211,17 +211,38 @@ export default {
       //   this.imageurl = fileReader.result;
       // });
       // fileReader.readAsDataURL(file[0]);
-      this.image = file[0];
-      // console.log(this.image);
-      var storageRef = fb.storage().ref('profiles/' + file.name);
+      // this.image = file[0];
+      // // console.log(this.image);
+      // var storageRef = fb.storage().ref('profiles/' + file.name);
 
-      storageRef.put(file).then(function() {
-        storageRef.getDownloadURL().then(function(downloadURL) {
-          console.log('File available at', downloadURL);
-          self.imageurl = downloadURL;
-          self.image = downloadURL;
-        });
-      });
+      // storageRef.put(file).then(function() {
+      //   storageRef.getDownloadURL().then(function(downloadURL) {
+      //     console.log('File available at', downloadURL);
+
+      //     self.productimage.push(downloadURL);
+      //   });
+      // });
+      let file = e.target.files[0];
+      console.log(e.target.files[0]);
+      var storageRef = fb.storage().ref('profiles/' + file.name);
+      let uploadTask = storageRef.put(file);
+
+      uploadTask.on(
+        'state_changed',
+        snapshot => {},
+        error => {
+          // Handle unsuccessful uploads
+        },
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+            this.img = downloadURL;
+            console.log('file available at', downloadURL);
+          });
+        }
+      );
     }
   },
   computed: {
