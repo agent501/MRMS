@@ -33,29 +33,39 @@
       </v-carousel-item>
     </v-carousel>
 
-    <!-- Category -->
     <div>
-      <v-card class="d-flex flex-column mx-auto mt-10" width="1200" flat tile>
-        <div class="ml-3 mt-1" style="font-size:25px">Category</div>
-        <v-card class="d-flex flex-wrap text-center mt-2" flat tile>
-          <v-hover v-slot:default="{ hover }" v-for="(n,index) in visiblePages" :key="index">
-            <v-card
-              :elevation="hover ? 12 : 2"
-              class="pa-2"
-              width="120"
-              height="160"
-              outlined
-              tile
-              @click="onLoadProduct(product.id)"
-            >
-              <v-img height="100" width="100" :src="n.image"></v-img>
-              <p class="mx-auto">{{n.title}}</p>
-            </v-card>
-          </v-hover>
-        </v-card>
+      <div class="mt-10 text-center" style="font-size:25px">Category</div>
+
+      <v-card
+        v-bind:pagination.sync="pagination"
+        class="d-flex flex-wrap mx-auto text-center"
+        width="1200"
+        flat
+        tile
+      >
+        <v-flex xs2 v-for="card in cards" :key="card.title" class="mx-2">
+          <v-card>
+            <v-card-media :src="card.image" height="200px"></v-card-media>
+            <v-card-title v-text="card.title"></v-card-title>
+            <v-card-text v-text="card.content"></v-card-text>
+          </v-card>
+        </v-flex>
+        <!-- <v-card
+          v-for="n in 12"
+          :key="n"
+          class="pa-2"
+          width="120"
+          height="145"
+          outlined
+          tile
+          @click="onLoadProduct(product.id)"
+        >
+          <v-img height="100" width="100" src="https://cdn.vuetifyjs.com/images/cards/store.jpg"></v-img>
+          <p class="mt-1">Flex item</p>
+        </v-card>-->
       </v-card>
       <div class="text-xs-center pt-2">
-        <v-pagination v-model="page" :length="Math.ceil(pages.length/perPage)"></v-pagination>
+        <v-pagination v-model="page" :length="pageLength"></v-pagination>
       </div>
     </div>
   </div>
@@ -65,12 +75,12 @@
 export default {
   data: () => ({
     page: 1,
-    perPage: 20,
-    pages: [
+    pageLength: 5,
+    cards: [
       {
         title: 'First test card',
         image:
-          'https://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg',
+          'https://www.elastic.co/assets/bltada7771f270d08f6/enhanced-buzz-1492-1379411828-15.jpg',
         content: 'First card text content goes here',
       },
       {
@@ -109,48 +119,6 @@ export default {
           'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
         content: 'First card text content goes here',
       },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
-      {
-        title: 'Fifth test card',
-        image:
-          'http://mojly.com/wp-content/uploads/2017/12/love-image-lovely-images-photo-gallery-629721354.jpg',
-        content: 'First card text content goes here',
-      },
     ],
   }),
   computed: {
@@ -160,11 +128,10 @@ export default {
     loading() {
       return this.$store.getters.loading;
     },
-    visiblePages() {
-      return this.pages.slice(
-        (this.page - 1) * this.perPage,
-        this.page * this.perPage
-      );
+    pages() {
+      return this.pagination.rowsPerPage
+        ? Math.ceil(this.items.length / this.pagination.rowsPerPage)
+        : 0;
     },
   },
   methods: {

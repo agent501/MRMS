@@ -33,25 +33,23 @@
       </v-carousel-item>
     </v-carousel>
 
-    <!-- Category -->
     <div>
       <v-card class="d-flex flex-column mx-auto mt-10" width="1200" flat tile>
         <div class="ml-3 mt-1" style="font-size:25px">Category</div>
         <v-card class="d-flex flex-wrap text-center mt-2" flat tile>
-          <v-hover v-slot:default="{ hover }" v-for="(n,index) in visiblePages" :key="index">
-            <v-card
-              :elevation="hover ? 12 : 2"
-              class="pa-2"
-              width="120"
-              height="160"
-              outlined
-              tile
-              @click="onLoadProduct(product.id)"
-            >
-              <v-img height="100" width="100" :src="n.image"></v-img>
-              <p class="mx-auto">{{n.title}}</p>
-            </v-card>
-          </v-hover>
+          <v-card
+            v-for="(n,index) in visiblePages"
+            :key="index"
+            class="pa-2"
+            width="120"
+            height="160"
+            outlined
+            tile
+            @click="onLoadProduct(product.id)"
+          >
+            <v-img height="100" width="100" :src="n.image"></v-img>
+            <p class="mt-1">{{n.title}}</p>
+          </v-card>
         </v-card>
       </v-card>
       <div class="text-xs-center pt-2">
